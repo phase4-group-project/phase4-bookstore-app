@@ -37,5 +37,5 @@ class ApplicationController < ActionController::API
     def standard_error(exception)
         app_response(message: 'failed', data: { info: exception.message }, status: :unprocessable_entity)
     end
-
+   
 end
