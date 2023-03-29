@@ -1,77 +1,127 @@
-# Password Protection Lab
+# phase-4-Task-Taker
+This is a simple RESTful API for tracking users and their tasks. It is built with Ruby on Rails.
 
-## Learning Goals
+It also has a frontend repository built using React
+        https://github.com/Sammy-CK/task-taker
 
-- Implement login and signup with a password
-- Use `has_secure_password` to hash and salt passwords
+        
+We have two models: User and Task.
 
-## Introduction
 
-We're going to make a Rails app that covers a simple authentication flow: users
-can create accounts, log in, and log out.
+## Use this link to access the api and add endpoints to perform requests:
+        https://task-201f.onrender.com
 
-There is some starter code in place for a Rails API backend and a React frontend.
-To get set up, run:
+## Models
 
-```console
-$ bundle install
-$ npm install --prefix client
-```
+The following relationships have been established:
 
-You can work on this lab by running the tests with `learn test`. It will also be
-helpful to see what's happening during the request/response cycle by running the
-app in the browser. You can run the Rails server with:
+- A `User` has many `Tasks`
 
-```console
-$ rails s
-```
+- A `Task` belongs to a `User`.
 
-And you can run React in another terminal with:
+## Entity Relationship Diagram(ERD)
+<img src="relationship.png">
 
-```console
-$ npm start --prefix client
-```
+## Validations
 
-You don't have to make any changes to the React code to get this lab working.
+In `User` model:
+- `username` must be more than five and less than eight characters
 
-## Setup
+In `Task` model:
+- `description` must be present and at least 20 characters long
 
-Our app has three pages:
+In `Task` model:
+- `title` must be present and at least 5 characters long and maximum 20 characters long
 
-1. A signup page, where the user enters their username, password, and password
-   confirmation.
-2. A login page, where the user submits their username and password and are then
-   logged in.
-3. A user homepage, which says, "Welcome, ${username}!"
+**Routes**
 
-Users should not be able to log in if they enter an incorrect password.
+The following routes have been set up:
 
-Note: we're not covering password validations in this lab, so don't worry about
-those. Password validation is hard to get right anyway — it's surprisingly easy
-to produce rules that decrease password security rather than enhance it.
+- POST `/users`: Register a user
+- POST `/users/login`: Returns information about a specific user and creates a new session
+- DELETE `/users/logout`: Deletes a session of the user.
+- GET `/user/login/check`: Ensures users session is still valid and logged in
+- POST `/todos`: Creates an instance of Task for the specific user.
+- PUT `/todos/:id`: Updates an instance of Task for the specified user
+- DELETE `/todos/:id`: Deletes an instance of Task for the specified user
+- GET `/todos`: Returns instances of Task for the specified user
 
-## Instructions
 
-To complete the lab and get the tests passing, you will need to:
+**Errors**
 
-- Create a User model, and migrations for a `users` table with `username` and
-  `password_digest` columns. Make sure to use `password_digest`, not
-  `password`, in your migration, and to include the has_secure_password macro
-  in your model.
+If a request is made with invalid parameters, the API will respond with a JSON error message.
 
-- Create a `UsersController` with a `create` method that responds to a `POST /signup` request. It should: create a new user; save their hashed password in
-  the database; save the user's ID in the session hash; and return the user
-  object in the JSON response.
+If a request is made to incorrect resources, the API will respond with a JSON error message.
 
-- Add a `show` method to your `UsersController` that responds to a `GET /me`
-  request. If the user is authenticated, return the user object in the JSON
-  response.
 
-- Create a Sessions controller with a `create` action for logging in that responds to a `POST /login` request, and a
-  `destroy` action for logging out that responds to a `DELETE /logout` request.
+## Tools Used
+This project was built with the following tools:
 
-Happy coding!
+- Ruby on Rails
 
-## Resources
+Documentation on the Ruby language can be found here: [Ruby Docs](https://docs.ruby-lang.org/en/3.1/)
 
-- [`has_secure_password`](https://api.rubyonrails.org/classes/ActiveModel/SecurePassword/ClassMethods.html)
+## Pre-requisites
+In order to use this repo you need to have the following installed:
+
+- OS [either: Windows 10+, Linux or MacOS(running on x86 or arm architecture)]
+- Ruby - 3.1.+
+
+## Installation
+
+To use this repo on your machine requires some simple steps
+
+### Alternative One
+
+- Open a terminal / command line interface on your computer
+- Clone the repo by using the following:
+
+        git@github.com:Sammy-CK/task-backend.git
+
+- Be patient as it creates a copy on your local machine for you.
+- Change directory to the repo folder:
+
+        cd task-backend
+
+- (Optional) Open it in ``Visual Studio Code``
+
+        code .
+
+- (Alternate Option) Open it in any editor of your choice.
+
+### Alternative Two
+
+- On the top right corner of this page there is a button labelled ``Fork``.
+- Click on that button to fork the repo to your own account.
+- Take on the process in ``Alternative One`` above.
+- Remember to replace your username when cloning.
+
+        git clone https://github.com/your-username-here/task-backend
+
+
+# Running the application
+
+Running the application is very straight forward. You can use the following steps to run the app.
+
+-   Install required gems
+        
+        bundle install
+
+-   Migrate the tables onto the database
+
+        rails db:migrate
+
+- Run the application on the terminal
+
+        rails server
+
+- The API can then be accessed using a tool like Postman.
+
+
+
+# Authors
+This project was contributed to by:
+- [Sammy Cherono](https://github.com/Sammy-CK/)
+
+# License
+The project is licensed under Apache 2.0. 
