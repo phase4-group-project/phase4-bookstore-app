@@ -9,10 +9,10 @@ Rails.application.routes.draw do
   get '/user/login/check', to: 'users#check_login_status'
   get '/me', to: 'application#user'
 
-  # todos
-  post '/todos', to: 'todos#create'
-  put '/todos/:id', to: 'todos#update'
-  delete '/todos/:id', to: 'todos#destroy'
-  get '/todos', to: 'todos#index'
+  # books
+  post '/books', to: 'books#create'
+  put '/books/:id', to: 'books#update'
+  delete '/books/:id', to: 'books#destroy'
+  get '/books', to: 'books#index'
 
 end
