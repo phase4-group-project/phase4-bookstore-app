@@ -20,4 +20,10 @@ Rails.application.routes.draw do
   post '/orders', to: "orders#create"
   get '/orders/:id', to: "orders#show"
 
+  #categories
+  get '/categories', to: "categories#index"
+  post '/categories', to: "categories#create"
+  delete '/categories/:id', to: "categories#destroy"
+
+
 end
