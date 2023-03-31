@@ -100,7 +100,7 @@ Running the application is very straight forward. You can use the following step
    ```
 3. Run the application
     ```{shell}
-    rails start
+    rails server
     ```
 4. Open the application from your browser
     ```
