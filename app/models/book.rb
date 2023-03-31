@@ -1,8 +1,8 @@
 class Book < ApplicationRecord
   belongs_to :user
+  belongs_to :category
+  
   validates :title, presence: true
   validates :price, presence: true
-
-  has_many :order_items, dependent: :destroy
-  has_many :orders, through: :order_items
+  has_many :orders, dependent: :destroy
 end

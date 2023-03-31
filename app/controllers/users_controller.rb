@@ -1,45 +1,21 @@
 class UsersController < ApplicationController
 
-    before_action :session_expired?, only: [:check_login_status]
-
-    def register
-        user = User.create(user_params)
-        if user.valid?
-            save_user(user.id)
-            app_response(message: 'Registration was successful', status: :created, data: user)
-        else
-            app_response(message: 'Something went wrong during registration', status: :unprocessable_entity, data: user.errors)
-        end
+  skip_before_action :authorize_request, only: :create
+  def create
+    user = User.new(user_params)
+    if user.save
+      token = JWT.encode({ user_id: user.id }, Rails.application.secrets.secret_key_base)
+      
+      render json: {user: user, token: token }, status: :created
+    else
+      render json: { errors: user.errors.full_messages }, status: :unprocessable_entity
     end
-
-    def login
-        sql = "username = :username OR email = :email"
-        user = User.where(sql, { username: user_params[:username], email: user_params[:email] }).first
-        if user&.authenticate(user_params[:password])
-            save_user(user.id)
-            app_response(message: 'Login was successful', status: :ok, data: user)
-        else
-            app_response(message: 'Invalid username/email or password', status: :unauthorized)
-        end
-    end
-
-    def logout
-        remove_user
-        app_response(message: 'Logout successful')
-    end
-    def show
-        User.find(session[:uid].to_i) 
-        render json: user
-      end
-
-    def check_login_status
-        app_response(message: 'success', status: :ok)
-    end
-
-    private 
+  end
+  
     
-    def user_params
-        params.permit(:username, :email, :password)
-    end
-
+      private
+    
+      def user_params
+        params.permit(:name, :email, :password, :password_confirmation)
+      end
 end
