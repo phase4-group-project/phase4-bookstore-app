@@ -1,42 +1,47 @@
-# db/seeds.rb
 require 'faker'
-
-# Create categories
-categories = []
-5.times do
-  categories << Category.create(name: Faker::Book.genre)
-end
-
-# Create books
-books = []
-20.times do
-  book = Book.create(
-    title: Faker::Book.title,
-    author: Faker::Book.author,
-    description: Faker::Lorem.paragraph,
-    price: Faker::Number.decimal(l_digits: 2),
-    categories: categories.sample(rand(1..3))
-  )
-  books << book
-end
-
-# Create users
-users = []
-5.times do
-  user = User.create(
-    name: Faker::Name.name,
-    email: Faker::Internet.email,
-    password: 'password',
-    password_confirmation: 'password'
-  )
-  users << user
-end
-
-# Create orders
+Faker::Config.locale = :en # Set Faker locale to English
+puts "seeding......"
 10.times do
-  order = Order.create(
-    user: users.sample,
-    book: books.sample,
-    quantity: rand(1..5)
-  )
-end
+    User.create!(
+      name: Faker::Name.name,
+      email: Faker::Internet.email,
+      password: '1111' # Set password directly to '1111'
+    )
+  end
+
+  5.times do
+    Category.create!(
+      name: Faker::Book.genre,
+      description: Faker::Lorem.sentence
+    )
+  end
+
+50.times do
+    Book.create!(
+      title: Faker::Book.title,
+      description: Faker::Lorem.sentence,
+      price: Faker::Commerce.price,
+      author: Faker::Book.author,
+      user_id: User.pluck(:id).sample,
+      category_id: Category.pluck(:id).sample
+    )
+  end
+  
+  5.times do
+    Category.create!(
+      name: Faker::Book.genre,
+      description: Faker::Lorem.sentence
+    )
+  end
+  
+  20.times do
+    Order.create!(
+      user_id: User.pluck(:id).sample,
+      book_id: Book.pluck(:id).sample,
+      quantity: Faker::Number.between(from: 1, to: 5),
+      total_price: Faker::Number.between(from: 10, to: 50) * 100
+    )
+  end
+  
+  
+puts "Done seeding...."

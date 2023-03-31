@@ -1,27 +1,36 @@
 class CategoriesController < ApplicationController
-    
-    def create
-        category = Category.create(category_params)
-        if category.valid?
-            app_response(status: :created, data: category)
-        else
-            app_response(status: :unprocessable_entity, data: category.errors.full_messages, message: 'failed')
-        end
-    end
+  before_action :set_category, only: [:destroy]
 
-    def destroy
-        Category.find(params[:id]).destroy
-        app_response(message: 'success', data: { info: 'deleted category successfully' }, status: 204)
-    end
+  # POST /categories
+  def create
+    @category = Category.create(category_params)
 
-    def index
-        categories = Category.all
-        app_response(message: 'success', data: categories)
+    if @category.save
+      render json: @category, status: :created
+    else
+      render json: @category.errors, status: :unprocessable_entity
     end
+  end
 
-    private
+#   delete category
+  def destroy
+    @category.destroy
+    render json: @category, status: 204
+  end
 
-    def category_params
-        params.permit(:name, :description)
-    end
+#   get all categories
+  def index
+    render json: Category.all
+  end
+
+  # Use callbacks to share common setup or constraints between actions.
+  def set_category
+    @category = Category.find(params[:id])
+  end
+
+  private
+
+  def category_params
+    params.require(:category).permit(:name, :description)
+  end
 end
