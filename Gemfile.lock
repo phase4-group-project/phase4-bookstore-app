@@ -175,5 +175,4 @@ DEPENDENCIES
   sqlite3 (~> 1.4)
   tzinfo-data
 
-BUNDLED WITH
-   2.4.9
+
