@@ -53,7 +53,16 @@ Rails.application.configure do
   # Highlight code that triggered database queries in logs.
   config.active_record.verbose_query_logs = true
 
-
+  config.action_mailer.delivery_method = :smtp
+  config.action_mailer.smtp_settings = {
+    :user_name => 'your_mailtrap_username',
+    :password => 'your_mailtrap_password',
+    :address => 'smtp.mailtrap.io',
+    :domain => 'smtp.mailtrap.io',
+    :port => '2525',
+    :authentication => :cram_md5
+  }
+  
   # Raises error for missing translations.
   # config.i18n.raise_on_missing_translations = true
 

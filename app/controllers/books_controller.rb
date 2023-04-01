@@ -4,15 +4,18 @@ class BooksController < ApplicationController
         before_action :set_book, only: [:show, :update, :destroy]
       
         # GET /books
-        def index
-          @books = @current_user.books
-          render json: @books
-        end
-      
+      def index
+  @books = @current_user.books.joins(:category).select('books.*, categories.name as category_name')
+  render json: @books
+end
+
+     
         # GET /books/1
-        def show
-          render json: @book
-        end
+def show
+  category_name = @book.category.name
+  render json: { book: @book, category_name: category_name }
+end
+
       
         # POST /books
         def create

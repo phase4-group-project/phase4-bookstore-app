@@ -17,6 +17,11 @@ class CategoriesController < ApplicationController
     @category.destroy
     render json: @category, status: 204
   end
+  
+    # Get a specific category
+  def show
+    render json: @category
+  end
 
 #   get all categories
   def index
