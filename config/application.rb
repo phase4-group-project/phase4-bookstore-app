@@ -11,6 +11,8 @@ module TodoApi
   class Application < Rails::Application
     # Initialize configuration defaults for originally generated Rails version.
     config.load_defaults 7.0
+    config.active_record.sqlite3_production_warning = false
+
 # Enable CORS
 config.middleware.insert_before 0, Rack::Cors do
   allow do
