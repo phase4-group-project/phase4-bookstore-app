@@ -52,7 +52,7 @@ The following are the concepts covered in this practice session
 
 ## A deployed live link to this project:
 This is the deployed link 
-        https://superheroes-code-challenge-backend.onrender.com/heroes
+        https://bookstore-om1m.onrender.com
 
 
 ## Installation
